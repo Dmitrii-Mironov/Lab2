@@ -46,3 +46,32 @@ class TestBinaryMultiple3(unittest.TestCase):
         results = [is_binary_multiple_3(b) for b in binaries]
         expected_results = [True, False, False, True, False, False, True, True]
         self.assertEqual(results, expected_results)
+
+def main():
+    # Пользовательский ввод
+    user_input = input("Введите двоичное число (или несколько, разделенных пробелами): ")
+    binaries_from_input = user_input.split()
+
+    print("Двоичные числа, кратные 3 из пользовательского ввода:")
+    for binary in binaries_from_input:
+        if is_binary_multiple_3(binary):
+            print(binary)
+
+    # Поиск на веб-странице
+    url = input("Введите URL для поиска двоичных чисел: ")
+    try:
+        response = requests.get(url) # https://stankin.ru/
+        response.raise_for_status()  # Проверка на ошибки HTTP
+        found_binaries = find_binaries_3(response.text)
+
+        print("Двоичные числа, кратные 3 из веб-страницы:")
+        for binary in found_binaries:
+            print(binary)
+    except requests.exceptions.RequestException as e:
+        print(f"Ошибка при обращении к URL: {e}")
+
+    # Запуск тестов
+    unittest.main()
+
+if __name__ == "__main__":
+    main()
